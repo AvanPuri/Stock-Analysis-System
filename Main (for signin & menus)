@@ -1,0 +1,110 @@
+#include <iostream>
+#include "SignIn.hpp"
+#include "UserData.hpp"
+using namespace std;
+
+void Login(UserData database, bool success) {
+    string username, password;
+    cout << "Enter username : ";
+    cin >> username;
+    cout << endl;
+    cout << "Enter password : ";
+    cin >> password;
+    cout << endl;
+    
+    if (database.authenticate(username, password)) {
+        cout << "Login successful!" << endl;
+        success = true;
+    } else {
+        cout << "Invalid username or password." << endl;
+    }
+}
+
+void SignUp(UserData database, bool success) {
+    SignIn user, pass;
+    string username, password;
+    cout << "Please enter a new username : ";
+    cin >> username;
+    user.SetUsername(username);
+    cout << endl;
+    cout << "Please enter a new password : ";
+    cin >> password;
+    cout << endl;
+    user.SetPassword(password);
+    
+    if (database.AddUser(user)) {
+        cout << "User information saved successfully!" << endl;
+    } else {
+        cout << "User information was not saved." << endl;
+    }
+    
+}
+int main() {
+    UserData database;
+    bool success = false;
+    
+    
+    SignIn user1("user1", "password1");
+    database.AddUser(user1);
+    
+    char choice;
+    cout << "Please select an option : " << endl;
+    cout << "1. Login" << endl;
+    cout << "2. Signup" << endl;
+    cin >> choice;
+    
+    
+    switch(choice) {
+        case '1':
+            do {
+                Login(database, success);
+            } while (success == false);
+            break;
+        case '2':
+            SignUp(database, success);
+    }
+    
+    cout << "Please select an option for stock analysis : " << endl;
+    cout << "1. Choose a new stock ticker : " << endl;
+    cout << "2. Review or compare stocks : " << endl;
+    cout << "3. Exit program : " << endl;
+    
+    cin >> choice;
+    
+    do {
+        switch (choice) {
+            case '1':
+                //StockInfo();
+                break;
+            case '2':
+                char subchoice;
+                cout << "Please select an option for reviewing and comparing : " << endl;
+                cout << "1. Review Info : ";
+                cout << endl;
+                cout << "2. Compare Infor : ";
+                cout << endl;
+                cin >> subchoice;
+                
+                switch (subchoice) {
+                    case '1':
+                        //ReviewInfo();
+                        //Show graph
+                        break;
+                    case '2':
+                        //Compare();
+                        //Show graph
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case '3':
+                success = false;
+                break;
+            default:
+                break;
+        }
+    } while (success == false);
+    
+    return 0;
+}
