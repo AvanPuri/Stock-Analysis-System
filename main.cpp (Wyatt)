@@ -1,0 +1,172 @@
+#include <iostream>
+#include <string>
+#include "SignUp.hpp"
+#include "LogIn.hpp"
+
+void Register();
+void Menu();
+
+int main() {
+    
+    Menu();
+    
+    return 0;
+    
+    
+    
+    
+    
+}
+
+void UserLogIn() {
+    LogIn logIn;
+    string username, password;
+    cout << "Please enter your username : ";
+    cin >> username;
+    cout << "______________________" << endl;
+    cout << "Please enter your password : ";
+    cin >> password;
+    cout << "______________________" << endl;
+    logIn.Authenticate(username, password);
+}
+
+
+void Register() {
+    SignUp signUp;
+    string username, password;
+    cout << "Please enter a username : ";
+    cin >> username;
+    cout << "______________________" << endl;
+    signUp.Setusername(username);
+    cout << "Password must be at least 10 characters." << endl;
+    cout << "Password must contain a number." << endl;
+    cout << "Please enter a password : ";
+    cin >> password;
+    cout << "______________________" << endl;
+    
+    bool Length = false;
+    bool HasNum = false;
+    
+    
+    while(!Length || !HasNum) {
+        if (password.length() >= 10) {
+            Length = true;
+        } else {
+            cout << "Password must be at least 10 characters." << endl;
+        }
+        
+        for (int i = 0; i < password.length(); i++) {
+            if (isdigit(password[i])) {
+                HasNum = true;
+            } else {
+                HasNum = false;
+            }
+        }
+        if(!HasNum) {
+            cout << "Password must contain a number (0-9)." << endl;
+        }
+        
+        if (!Length || !HasNum) {
+            cout << "Please enter a password : ";
+            cin >> password;
+        }
+    }
+    
+    if (Length && HasNum) {
+        cout << endl;
+        cout << "**********************" << endl;
+        cout << "Password accepted. Account for > " << signUp.Getusername() << " < created successfully." << endl;
+        cout << "**********************" << endl << endl;
+        signUp.Setpassword(password);
+    }
+}
+
+void Menu() {
+    char choice;
+    bool LoggedIn = false;
+    bool exit = false;
+    
+    do {
+        cout << "Please select an option : " << endl;
+        cout << "1. Login" << endl;
+        cout << "2. Signup" << endl;
+        cout << "3. Exit program" << endl;
+        cout << "______________________" << endl;
+        cout << "Enter number : ";
+        cin >> choice;
+        
+        switch(choice) {
+            case '1':
+                UserLogIn();
+                break;
+                
+            case '2':
+                Register();
+                LoggedIn = true;
+                break;
+                
+            case '3':
+                cout << "Thank you for using the program. Goodbye!" << endl;
+                exit = true;
+                break;
+                
+            default:
+                cout << "Invalid choice, please try again." << endl;
+                break;
+        }
+        
+        if (LoggedIn) {
+            do {
+                cout << "Please select an option for stock analysis : " << endl;
+                cout << "1. Choose a new stock ticker : " << endl;
+                cout << "2. Compare stocks : " << endl;
+                cout << "3. Review information : " << endl;
+                cout << "4. Logout." << endl;
+                cout << "______________________" << endl;
+                cout << "Enter number : ";
+                cin >> choice;
+                
+                switch (choice) {
+                    case '1':
+                        //NewStockTicker();
+                        break;
+                    case '2':
+                        //compare();
+                        
+                    case '3':
+                        char subchoice;
+                        cout << "Please select an option for reviewing and comparing : " << endl;
+                        cout << "1. Review user info : " << endl;
+                        cout << "2. Review user history : " << endl;
+                        cout << "3. Return to main menu : " << endl;
+                        cin >> subchoice;
+                        
+                        switch (subchoice) {
+                            case '1':
+                                //UserInfo();
+                                break;
+                            case '2':
+                                //UserHistory
+                                break;
+                            case '3':
+                                cout << "Returning to main menu." << endl;
+                                break;
+                                
+                            default:
+                                cout << "Invalid choice, please try again." << endl;
+                                break;
+                        }
+                        break;
+                    case '4':
+                        cout << "Successfully logged out." << endl;
+                        LoggedIn = false;
+                        break;
+                    default:
+                        cout << "Invalid entry." << endl;
+                        break;
+                }
+            } while (LoggedIn);
+        }
+        
+    } while (exit == false);
+}
