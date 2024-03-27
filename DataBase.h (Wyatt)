@@ -1,0 +1,35 @@
+#include <stdio.h>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include "SignUp.hpp"
+using namespace std;
+
+class DataBase : public SignUp {
+protected:
+    string UserDatabase;
+public:
+    DataBase();
+    DataBase(string user, string pass);
+    
+    void AddUserInfo(string username, string password) {
+        
+        ifstream CheckUser(username + ".txt");
+        if (CheckUser) {
+            cout << "Username is taken, please try again." << endl;
+            CheckUser.close();
+        } else {
+            ofstream UserFile;
+            UserFile.open(username + ".txt", ios::app);
+            if (UserFile.is_open()) {
+                cout << "Account for > " << username << " <" << endl;
+                UserFile << "Username : " << username << endl;
+                UserFile << "Password : " << password << endl;
+                UserFile.close();
+            } else {
+                cout << "Error saving account details." << endl;
+            }
+        }
+    }
+};
+#endif /* DataBase_hpp */
