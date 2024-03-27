@@ -1,0 +1,82 @@
+#include "StockAnalysis.h"
+#include <iostream>	
+#include <string>
+#include <fstream>
+#include <sstream>
+#include <iomanip>
+
+
+
+StockAnalysis::StockAnalysis() {
+	
+	m_average = 0;
+	m_high = 0;
+	m_low = 0;
+	m_volatility = 0;
+	m_HighDate = "";
+    m_LowDate = "";
+	m_NumberofDays = 0;
+	
+}
+
+void StockAnalysis::Average() {
+	double sum = 0;
+	for (int i = 0; i < m_linecount-1; i++) {
+		
+		
+		sum += Close[i];
+		
+		
+	}
+
+	
+	m_average = sum / m_linecount;
+}
+
+
+void StockAnalysis::HighValue() {
+
+	m_high = 0;
+	
+	for(int i = 0; i < m_linecount; i++) {
+	
+		if(High[i] > m_high) {
+			m_high = High[i];
+			m_HighDate = Date[i];
+		}
+
+
+	}
+
+
+}
+
+
+void StockAnalysis::LowValue() {
+	m_low = 1000000;
+	for (int i = 0; i < m_linecount-1; i++) { 
+		if (Low[i] < m_low) {
+			m_low = Low[i];
+			m_LowDate = Date[i];
+		}
+	}
+}
+
+void StockAnalysis::Volatility() {
+	double sum1 = 0;
+	for (int i = 0; i < m_linecount-1; i++) {
+		sum1 += (Close[i] - m_average) * (Close[i] - m_average);
+	}
+	m_volatility = sqrt(sum1 / m_linecount);
+}
+
+void StockAnalysis::PrintData() {
+
+	 
+	cout << "The average price is: " << "$" << m_average << endl;
+	cout << "The highest value is: " << "$" << m_high << " on the date: " << m_HighDate << ". This would have been the best day to sell the stock." << endl;
+	cout << "The lowest value is: " <<  "$" << m_low << " on the date: " << m_LowDate << ". This would have been the best day to buy the stock." << endl;
+	cout << "The volatility is: " << m_volatility << " This shows on average how far the stock value falls from the mean." << endl;
+	
+
+}
