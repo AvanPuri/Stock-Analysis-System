@@ -1,10 +1,13 @@
 #include <iostream>
 #include <string>
-#include "CURL.h" 
-#include "StockData.h"
+#include "CurlWrap.h" 
+#include "GetStockData.h"
+#include "StockAnalysis.h"
 #include <ctime>
 #include <chrono>
-
+#include <fstream>
+#include <sstream>
+#include <iomanip>
 
 using namespace std;
 using namespace std::chrono;
@@ -12,8 +15,8 @@ using namespace std::chrono;
 
 struct BandEdate {
 
-    struct tm begin{};
-    struct tm end{};
+    struct tm begin {};
+    struct tm end {};
 
 
 
@@ -70,22 +73,37 @@ string StockInfo() {
 
 }
 
+
+
+
+
+
+
+
+
+
+
 int main() {
 
-    string URL = StockInfo(); 
+    string URL = StockInfo();
+    cout << URL << endl;
+
+    StockAnalysis S;
+    S.OpenFile();
+    S.Parsedata();
+    S.Average();
+    S.HighValue();
+    S.LowValue();
+    S.Volatility();
+   
+    S.PrintData();
+   
+    
+    
+
 
     
-    StockData s1(URL);       
-    s1.Print();
-
-
-
-
 }
 
 
-
-   
-
-   
 
