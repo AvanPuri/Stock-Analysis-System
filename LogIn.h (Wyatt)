@@ -1,0 +1,47 @@
+#ifndef Menu_hpp
+#define Menu_hpp
+
+#include <stdio.h>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include "DataBase.hpp"
+using namespace std;
+class LogIn : public DataBase {
+    
+public:
+    void Authenticate(string username, string password) {
+        ifstream UserFile;
+        UserFile.open(username + ".txt");
+        if (UserFile.is_open()) {
+            string line;
+            bool FoundUsername = false;
+            bool FoundPassword = false;
+            while (getline(UserFile, line)) {
+                if (line == username) {
+                    FoundUsername = true;
+                    cout << "Username > " << username << " < found. Please enter password." << endl;
+                    getline(UserFile, line);
+                    if (line == password) {
+                        FoundPassword = true;
+                    } else if (!FoundUsername) {
+                        cout << "Username not found." << endl;
+                        break;
+                    } else if (!FoundPassword) {
+                        cout << "Pasword not found." << endl;
+                        break;
+                    }
+                }
+                if (FoundUsername && FoundPassword) {
+                    cout << "Login successful." << endl;
+                    cout << "Welcome back > " << username << " <" << endl;
+                    break;
+                }
+            }
+            UserFile.close();
+        } else {
+            cout << "User account not found." << endl;
+        }
+    }
+};
+#endif /* Menu_hpp */
