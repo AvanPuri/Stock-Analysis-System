@@ -1,24 +1,48 @@
 #pragma once
 #include <string>
-#include <iostream>
-#include <curl/curl.h>
-#include <chrono>
-#include <map>
 
 using namespace std;
-class StockData
+
+class GetStockData
 {
 
-private:
-    
+protected:
+    string m_file;
     int m_linecount;
-    
+    string* Date;
+    double* Open;
+    double* High;
+    double* Low;
+    double* Close;
+    double* AdjClose;
+    int* Volume;
+
 public:
-    StockData();
-    StockData(const string& url);
-    void Parsefile(const string& url);
-    void Print();
+   GetStockData();
+  
+
+   void SetFile(string file);
+   string GetFile();    
+   int GetLineCount();  
+   string GetDate(int i);
+    double GetOpen(int i);
+    double GetHigh(int i);
+    double GetLow(int i);
+    double GetClose(int i);
+    double GetAdjClose(int i);
+    int GetVolume(int i);
+
+
+
+    void OpenFile();
+   void Parsedata();
+
+
+
+
+
 };
+
 
 
 
