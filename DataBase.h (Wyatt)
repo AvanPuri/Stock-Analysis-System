@@ -5,31 +5,12 @@
 #include "SignUp.hpp"
 using namespace std;
 
-class DataBase : public SignUp {
+class DataBase {
 protected:
     string UserDatabase;
 public:
     DataBase();
-    DataBase(string user, string pass);
+    DataBase(string username, string password);
     
-    void AddUserInfo(string username, string password) {
-        
-        ifstream CheckUser(username + ".txt");
-        if (CheckUser) {
-            cout << "Username is taken, please try again." << endl;
-            CheckUser.close();
-        } else {
-            ofstream UserFile;
-            UserFile.open(username + ".txt", ios::app);
-            if (UserFile.is_open()) {
-                cout << "Account for > " << username << " <" << endl;
-                UserFile << "Username : " << username << endl;
-                UserFile << "Password : " << password << endl;
-                UserFile.close();
-            } else {
-                cout << "Error saving account details." << endl;
-            }
-        }
-    }
+    void AddUserInfo(string username, string password);
 };
-#endif /* DataBase_hpp */
