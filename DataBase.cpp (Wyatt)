@@ -4,3 +4,27 @@ DataBase::DataBase() {
     
 }
 
+#include "DataBase.hpp"
+
+DataBase::DataBase() {
+}
+
+void DataBase::AddUserInfo(string username, string password) {
+    string filename = username + ".txt";
+   ifstream UserFile(filename, ios::in);
+   if (UserFile.is_open()) {
+       cout << "Username is taken, please try again." << endl;
+       UserFile.close();
+   } else {
+       ofstream UserFile(filename, ios::out);
+       if (UserFile.is_open()) {
+           UserFile << "Account for > " << username << " <" << endl;
+           UserFile << "Username : " << username << endl;
+           UserFile << "Password : " << password << endl;
+           UserFile.close();
+       } else {
+           cout << "Error saving account details." << endl;
+       }
+   }
+}
+
