@@ -1,23 +1,9 @@
-
-#include <stdio.h>
+#include "SignUp.hpp"
 #include <string>
-#include "LogIn.hpp"
 using namespace std;
 
-class SignUp : public LogIn {
-protected:
-    string username;
-    string password;
-    
-public:
-    SignUp();
-    SignUp(string user, string pass);
-    
-    string Getusername() {return username;}
-    string Getpassword() {return password;}
-    
-    void Setusername(string user) {username = user;}
-    void Setpassword(string pass) {password = pass;}
-    
-    void SaveUser();
-};
+SignUp::SignUp() {
+    username = " ";
+    password = " ";
+}
+
