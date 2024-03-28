@@ -1,1 +1,89 @@
 #include "LogIn.hpp"
+#include "LogIn.hpp"
+#include <string>
+using namespace std;
+
+bool UserLogIn() {
+    LogIn logIn;
+    bool CorUser = false;
+    bool CorPass = false;
+    bool LoggedIn = false;
+    string username, password;
+    
+    while (LoggedIn == false) {
+        cout << "Please enter your username : ";
+        cin >> username;
+        CorUser = logIn.AuthenticateUsername(username);
+        cout << "______________________" << endl;
+        
+        if (CorUser == false) {
+            cout << "Username not found." << endl;
+            LoggedIn = false;
+            return LoggedIn;
+            }
+        
+        if (CorUser == true) {
+            cout << "Please enter your password : ";
+            cin >> password;
+            CorPass = logIn.AuthenticatePassword(username, password);
+            cout << "______________________" << endl;
+            
+            if (CorPass == false) {
+                cout << "Incorrect password." << endl;
+                LoggedIn = false;
+                return LoggedIn;
+            }
+            
+        } else {
+            LoggedIn = false;
+            return LoggedIn;
+        }
+        
+        if (CorUser && CorPass) {
+            cout << "**********************" << endl;
+            cout << "Successfully logged in. Welcome home." << endl;
+            cout << "**********************" << endl;
+            LoggedIn = false;
+        } else {
+            cout << "Error logging in." << endl;
+            LoggedIn = true;
+        }
+    }
+    return LoggedIn;
+}
+
+bool LogIn::AuthenticateUsername(string username) {
+    fstream UserFile(username + ".txt");
+    if (UserFile.is_open()) {
+        string line;
+        while (getline(UserFile, line)) {
+            if (line.find(username) != string::npos) {
+                UserFile.close();
+                return true;
+            }
+        }
+        UserFile.close();
+        return false;
+    } else {
+        cout << "Error: Unable to open file" << endl;
+        return false;
+    }
+}
+
+bool LogIn::AuthenticatePassword(string username, string password) {
+    fstream UserFile(username + ".txt");
+    if (UserFile.is_open()) {
+        string line;
+        while (getline(UserFile, line)) {
+            if (line.find(password) != string::npos) {
+                UserFile.close();
+                return true;
+            }
+        }
+        UserFile.close();
+        return false;
+    } else {
+        cout << "Error: Unable to open file." << endl;
+        return false;
+    }
+}
