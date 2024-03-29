@@ -1,0 +1,10 @@
+#include "CompareStock.h"
+
+using namespace std;
+
+int main() {
+    CompareStock compareStock("stock_data.csv");
+    compareStock.compare();
+
+    return 0;
+}
