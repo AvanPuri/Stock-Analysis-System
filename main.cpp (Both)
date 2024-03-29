@@ -37,6 +37,17 @@ void NewTicker() {
 
     
 }
+bool isValidTicker(const string& ticker) {
+    if (ticker.empty()) {
+        return false;
+    }
+    for (char c : ticker) {
+        if (!isalnum(c)) {
+            return false;
+        }
+    }
+    return true;
+}
 
 
 string StockInfo() {
@@ -46,9 +57,14 @@ string StockInfo() {
     string interval;
     string ticker;
 
-    cout << "Enter ticker of stock you would like to find information on: " << endl;
-    cin >> ticker;
-
+    do {
+        cout << "Enter ticker of stock you would like to find information on: " << endl;
+        cin >> ticker;
+        if (!isValidTicker(ticker)) {
+            cout << "Invalid ticker. Please try again." << endl;
+        }
+    } while (!isValidTicker(ticker));
+    
     cout << "Enter the beginning year: " << endl;
     cin >> T.begin.tm_year;
     T.begin.tm_year -= 1900;
