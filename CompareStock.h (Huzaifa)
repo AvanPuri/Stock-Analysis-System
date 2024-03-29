@@ -1,0 +1,25 @@
+#include "CompareStock.h"
+#include <iostream>
+
+using namespace std;
+
+CompareStock::CompareStock(const string& filename) {
+    GetStockData data;
+    data.SetFile(filename);
+    data.OpenFile();
+    data.ParseData();
+    stockData.push_back(data);
+}
+
+void CompareStock::compare() const {
+    for (size_t i = 0; i + 1 < stockData.size(); ++i) {
+        const GetStockData& stock1 = stockData[i];
+        const GetStockData& stock2 = stockData[i + 1];
+
+        // Here you can access the data using the methods of GetStockData class
+        // For example:
+        // cout << "Date: " << stock1.GetDate(0) << " vs " << stock2.GetDate(0) << endl;
+        // cout << "Open: " << stock1.GetOpen(0) << " vs " << stock2.GetOpen(0) << endl;
+        // ... and so on
+    }
+}
