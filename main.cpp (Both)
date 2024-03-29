@@ -42,7 +42,7 @@ bool isValidTicker(const string& ticker) {
         return false;
     }
     for (char c : ticker) {
-        if (!isalnum(c)) {
+        if (isalnum(c)) {
             return false;
         }
     }
