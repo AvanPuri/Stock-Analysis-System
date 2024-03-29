@@ -38,22 +38,7 @@ void NewTicker() {
     
 }
 
-void AnalyzeData1() {
 
-    StockAnalysis S;
-    S.AnalyzeData();
-    S.OpenFile();
-    S.Parsedata();
-    S.Average();
-    S.HighValue();
-    S.LowValue();
-    S.Volatility();
-
-    S.PrintData();
-
-
-
-}
 string StockInfo() {
 
     BandEdate T;
@@ -101,6 +86,22 @@ string StockInfo() {
     system_clock::time_point end_date = system_clock::from_time_t(endtime);
 
     return C.URL(ticker, start_date, end_date, interval);
+
+
+}
+void AnalyzeData1() {
+
+    StockAnalysis S;
+    S.AnalyzeData();
+    S.OpenFile();
+    S.Parsedata();
+    S.Average();
+    S.HighValue();
+    S.LowValue();
+    S.Volatility();
+    S.Dataintofile();
+    S.PrintData();
+
 
 
 }
@@ -209,7 +210,7 @@ void Menu() {
                 cout << "Please select an option for stock analysis : " << endl;
                 cout << "1. Choose a new stock ticker : " << endl;
                 cout << "2. Analyze stock file : " << endl;
-                cout << "3. Review information : " << endl;
+                cout << "3. Review Information : " << endl;
                 cout << "4. Logout." << endl;
                 cout << "______________________" << endl;
                 cout << "Enter number : ";
