@@ -16,10 +16,14 @@ void CompareStock::compare() const {
         const GetStockData& stock1 = stockData[i];
         const GetStockData& stock2 = stockData[i + 1];
 
-        // Here you can access the data using the methods of GetStockData class
-        // For example:
-        // cout << "Date: " << stock1.GetDate(0) << " vs " << stock2.GetDate(0) << endl;
-        // cout << "Open: " << stock1.GetOpen(0) << " vs " << stock2.GetOpen(0) << endl;
-        // ... and so on
+       
+cout << "Date: " << stock1.GetDate(0) << " vs " << stock2.GetDate(0) << endl;
+cout << "Open: " << stock1.GetOpen(0) << " vs " << stock2.GetOpen(0) << endl;
+cout << "High: " << stock1.GetHigh(0) << " vs " << stock2.GetHigh(0) << endl;
+cout << "Low: " << stock1.GetLow(0) << " vs " << stock2.GetLow(0) << endl;
+cout << "Close: " << stock1.GetClose(0) << " vs " << stock2.GetClose(0) << endl;
+cout << "Adjusted Close: " << stock1.GetAdjClose(0) << " vs " << stock2.GetAdjClose(0) << endl;
+cout << "Volume: " << stock1.GetVolume(0) << " vs " << stock2.GetVolume(0) << endl;
+
     }
 }
