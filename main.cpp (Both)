@@ -10,7 +10,7 @@
 
 
 using namespace std;
-
+StockAnalysis S;
 
 struct BandEdate {
 
@@ -91,7 +91,7 @@ string StockInfo() {
 }
 void AnalyzeData1() {
 
-    StockAnalysis S;
+    
     S.AnalyzeData();
     S.OpenFile();
     S.Parsedata();
@@ -99,11 +99,17 @@ void AnalyzeData1() {
     S.HighValue();
     S.LowValue();
     S.Volatility();
-    S.Dataintofile();
     S.PrintData();
 
 
 
+}
+
+void Savetofile() {
+
+
+    
+    S.Dataintofile();
 }
 
 bool Register() {
@@ -210,7 +216,7 @@ void Menu() {
                 cout << "Please select an option for stock analysis : " << endl;
                 cout << "1. Choose a new stock ticker : " << endl;
                 cout << "2. Analyze stock file : " << endl;
-                cout << "3. Review Information : " << endl;
+                cout << "3. Save info into file : " << endl;
                 cout << "4. Logout." << endl;
                 cout << "______________________" << endl;
                 cout << "Enter number : ";
@@ -224,29 +230,8 @@ void Menu() {
                     AnalyzeData1();
 
                 case '3':
-                    char subchoice;
-                    cout << "Please select an option for reviewing and comparing : " << endl;
-                    cout << "1. Review user info : " << endl;
-                    cout << "2. Review user history : " << endl;
-                    cout << "3. Return to main menu : " << endl;
-                    cin >> subchoice;
-
-                    switch (subchoice) {
-                    case '1':
-                        //UserInfo();
-                        break;
-                    case '2':
-                        //UserHistory
-                        break;
-                    case '3':
-                        cout << "Returning to main menu." << endl;
-                        break;
-
-                    default:
-                        cout << "Invalid choice, please try again." << endl;
-                        break;
-                    }
-                    break;
+                    Savetofile();
+                   	break;
                 case '4':
                     cout << "**********************" << endl;
                     cout << "Successfully logged out." << endl;
