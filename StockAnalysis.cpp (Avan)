@@ -15,7 +15,7 @@ StockAnalysis::StockAnalysis() {
 	m_volatility = 0;
 	m_HighDate = "";
     m_LowDate = "";
-	m_NumberofDays = 0;
+	
 	
 }
 
@@ -79,4 +79,20 @@ void StockAnalysis::PrintData() {
 	cout << "The volatility is: " << m_volatility << " This shows on average how far the stock value falls from the mean." << endl;
 	
 
+}
+
+void StockAnalysis::Dataintofile() {
+	ofstream Newfile("output.txt"); 
+
+	if (!Newfile) { 
+		cout << "Error: Unable to open output file" << endl;
+		return;
+	}
+	cout << "Data has been saved to output.txt" << endl;	
+	Newfile << "The average price is: " << "$" << m_average << endl;
+	Newfile << "The highest value is: " << "$" << m_high << " on the date: " << m_HighDate << ". This would have been the best day to sell the stock." << endl;
+	Newfile << "The lowest value is: " << "$" << m_low << " on the date: " << m_LowDate << ". This would have been the best day to buy the stock." << endl;
+	Newfile << "The volatility is: " << m_volatility << " This shows on average how far the stock value falls from the mean." << endl;
+
+	Newfile.close();
 }
