@@ -37,12 +37,12 @@ void NewTicker() {
 
     
 }
-bool isValidTicker(const string& ticker) {
+bool CheckTicker(const string& ticker) {
     if (ticker.empty()) {
         return false;
     }
     for (char c : ticker) {
-        if (isalnum(c)) {
+        if (!isupper(c)) {
             return false;
         }
     }
@@ -58,12 +58,12 @@ string StockInfo() {
     string ticker;
 
     do {
-        cout << "Enter ticker of stock you would like to find information on: " << endl;
+        cout << "Enter ticker of stock you would like to find information on (E.g. AAPL): " << endl;
         cin >> ticker;
-        if (!isValidTicker(ticker)) {
-            cout << "Invalid ticker. Please try again." << endl;
+        if (!CheckTicker(ticker)) {
+            cout << "Invalid ticker. Please try again. Make sure everything you enters is in capitals and all letters" << endl;
         }
-    } while (!isValidTicker(ticker));
+    } while (!CheckTicker(ticker));
     
     cout << "Enter the beginning year: " << endl;
     cin >> T.begin.tm_year;
@@ -87,7 +87,7 @@ string StockInfo() {
     cout << "Enter the end day (1-31): " << endl;
     cin >> T.end.tm_mday;
 
-    cout << "Enter the interval for the stock: " << endl;
+    cout << "Enter the interval for the stock (E.g. 1d): " << endl;
     cin >> interval;
 
     time_t starttime = mktime(&T.begin);
@@ -246,6 +246,7 @@ void Menu() {
                     AnalyzeData1();
 
                 case '3':
+                    
                     Savetofile();
                    	break;
                 case '4':
