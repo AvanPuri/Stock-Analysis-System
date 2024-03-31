@@ -1,0 +1,32 @@
+#include "RiskManagement.h"
+#include <algorithm>
+#include <cmath>
+
+double RiskManagement::CalculateVaR(double* returns, int numReturns, double confidenceLevel) {
+    std::sort(returns, returns + numReturns);
+    int index = static_cast<int>(numReturns * (1 - confidenceLevel));
+    return -returns[index];
+}
+
+double RiskManagement::CalculateDrawdown(double* returns, int numReturns) {
+    double maxReturn = 0.0;
+    double drawdown = 0.0;
+
+    for (int i = 0; i < numReturns; ++i) {
+        maxReturn = std::max(maxReturn, returns[i]);
+        drawdown = std::min(drawdown, returns[i] - maxReturn);
+    }
+
+    return drawdown;
+}
+
+double RiskManagement::CalculateSharpeRatio(double* returns, int numReturns, double riskFreeRate) {
+    double sumReturns = 0.0;
+    for (int i = 0; i < numReturns; ++i) {
+        sumReturns += returns[i];
+    }
+    double avgReturn = sumReturns / numReturns;
+
+    double sumSquaredDiff = 0.0;
+    for (int i = 0; i < numReturns; ++i) {
+        sumSquaredDiff += std::pow(returns[i] - avgReturn, 
