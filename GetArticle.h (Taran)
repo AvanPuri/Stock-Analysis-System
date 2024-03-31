@@ -1,0 +1,19 @@
+#include <string>
+#include <iostream>
+#include "NewsCurl.h)
+
+using namespace std;
+
+class infowebsite : public NewsCurl
+{
+private:
+    string retrieveinfo(const string& companyticker) const;
+    
+public:
+    infowebsite();
+    ~infowebsite();
+    
+    string inputticker() const;
+
+    void retrieveinfoandoutput(const string& companyticker) const;
+};
