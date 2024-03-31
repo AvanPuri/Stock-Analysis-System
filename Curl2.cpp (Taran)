@@ -1,0 +1,50 @@
+#include "Curl2.hpp"
+#include <iostream>
+#include <string>
+#include <curl/curl.h>
+
+using namespace std;
+
+size_t curl_handler(char* data, size_t size, size_t size2, void* userdata) 
+{
+    static_cast<string*>(userdata)->append(data, size * size2);
+    return size * size2;
+}
+
+NewsCurl::NewsCurl() 
+{
+    curl = curl_easy_init();
+    if (curl) 
+    {
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, &curl_handler);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &stockanalysiswebsite);
+    } 
+    else
+    {
+        cout << "Error, unable to acess CURL library, can't acess website. " << '\n';
+    }
+}
+
+NewsCurl::~NewsCurl() 
+{
+    curl_easy_cleanup(curl);
+}
+
+string NewsCurl::getwebsite(const string& companyticker)
+{
+    if (!curl) 
+    {
+        cout << "Error: libcurl handle not initialized" << '\n';
+    }
+
+    string link = "https://stockanalysis.com/" + companyticker;
+    curl_easy_setopt(curl, CURLOPT_URL, link.c_str());
+
+
+    CURLcode res = curl_easy_perform(curl);
+    if (res != CURLE_OK) 
+    {
+        std::cerr << "Error, unable to acess CURL library, can't acess website. " << curl_easy_strerror(res) << '\n';
+    }
+    return stockanalysiswebsite;
+}
