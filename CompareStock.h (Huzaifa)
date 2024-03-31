@@ -1,17 +1,18 @@
-#ifndef COMPARESTOCK_H
-#define COMPARESTOCK_H
-
+#ifndef COMPARESTOCKS_H
+#define COMPARESTOCKS_H
+using namespace std;
 #include "GetStockData.h"
-#include <vector>
+#include <string>
 
-class CompareStock {
+class CompareStocks {
 private:
-    vector<GetStockData> stockData;
+    GetStockData m_stock1;
+    GetStockData m_stock2;
 
 public:
-    CompareStock(const string& filename);
-
-    void compare() const;
+    CompareStocks(const string& file1, const string& file2);
+    void CompareAllAspects(const string& date) const;
 };
 
-#endif 
+#endif // COMPARESTOCKS_H
+
