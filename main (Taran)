@@ -1,0 +1,16 @@
+#include <iostream>
+#include <string>
+#include "GetArticle.hpp"
+#include "Curl2.hpp"
+
+using namespace std;
+
+int main() 
+{
+    infowebsite info;
+
+    string companyticker = info.inputticker();
+
+    info.retrieveinfoandoutput(companyticker);
+
+}
