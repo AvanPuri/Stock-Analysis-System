@@ -1,29 +1,37 @@
-#include "CompareStock.h"
+#include "CompareStocks.h"
 #include <iostream>
 
 using namespace std;
 
-CompareStock::CompareStock(const string& filename) {
-    GetStockData data;
-    data.SetFile(filename);
-    data.OpenFile();
-    data.ParseData();
-    stockData.push_back(data);
-}
+CompareStocks::CompareStocks(const string& file1, const string& file2) : m_stock1(file1), m_stock2(file2) {}
 
-void CompareStock::compare() const {
-    for (size_t i = 0; i + 1 < stockData.size(); ++i) {
-        const GetStockData& stock1 = stockData[i];
-        const GetStockData& stock2 = stockData[i + 1];
+void CompareStocks::CompareAllAspects(const string& date) const {
+    m_stock1.OpenFile();
+    m_stock2.OpenFile();
+    m_stock1.ParseData();
+    m_stock2.ParseData();
 
-       
-cout << "Date: " << stock1.GetDate(0) << " vs " << stock2.GetDate(0) << endl;
-cout << "Open: " << stock1.GetOpen(0) << " vs " << stock2.GetOpen(0) << endl;
-cout << "High: " << stock1.GetHigh(0) << " vs " << stock2.GetHigh(0) << endl;
-cout << "Low: " << stock1.GetLow(0) << " vs " << stock2.GetLow(0) << endl;
-cout << "Close: " << stock1.GetClose(0) << " vs " << stock2.GetClose(0) << endl;
-cout << "Adjusted Close: " << stock1.GetAdjClose(0) << " vs " << stock2.GetAdjClose(0) << endl;
-cout << "Volume: " << stock1.GetVolume(0) << " vs " << stock2.GetVolume(0) << endl;
+    int index1 = -1;
+    int index2 = -1;
 
+    for (int i = 0; i < m_stock1.GetLineCount(); ++i) {
+        if (m_stock1.GetDate(i) == date) {
+            index1 = i;
+            break;
+        }
     }
-}
+
+ 
+    for (int i = 0; i < m_stock2.GetLineCount(); ++i) {
+        if (m_stock2.GetDate(i) == date) {
+            index2 = i;
+            break;
+        }
+    }
+
+    if (index1 != -1 && index2 != -1) {
+        cout << "Comparison of all aspects on " << date << ":" << endl;
+        cout << "Open: " << m_stock1.GetOpen(index1) << " vs " << m_stock2.GetOpen(index2) << endl;
+        cout << "High: " << m_stock1.GetHigh(index1) << " vs " << m_stock2.GetHigh(index2) << endl;
+        cout << "Low: " << m_stock1.GetLow(index1) << " vs " << m_stock2.GetLow(index2) << endl;
+        cout << "Close: " << m_stock1.GetClose
