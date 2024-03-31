@@ -1,6 +1,6 @@
 #include <string>
 #include <iostream>
-#include "NewsCurl.h)
+#include "Curl2.h"
 
 using namespace std;
 
