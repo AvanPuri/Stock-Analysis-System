@@ -21,7 +21,7 @@ NewsCurl::NewsCurl()
     } 
     else
     {
-        cout << "Error, unable to acess CURL library, can't acess website. " << '\n';
+        cout << "Error, unable to access CURL library, can't access the website. " << '\n';
     }
 }
 
@@ -44,7 +44,7 @@ string NewsCurl::getwebsite(const string& companyticker)
     CURLcode res = curl_easy_perform(curl);
     if (res != CURLE_OK) 
     {
-        std::cerr << "Error, unable to acess CURL library, can't acess website. " << curl_easy_strerror(res) << '\n';
+        std::cerr << "Error, unable to access CURL library, can't access the website. " << curl_easy_strerror(res) << '\n';
     }
     return stockanalysiswebsite;
 }
