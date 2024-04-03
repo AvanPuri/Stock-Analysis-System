@@ -1,10 +1,64 @@
 #include "CompareStock.h"
+#include "RiskManagement.h"
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <cmath>  // For std::sqrt and std::pow
 
 using namespace std;
 
 int main() {
-    CompareStock compareStock("stock_data.csv");
+    ifstream file("returns.csv");
+    if (!file.is_open()) {
+        cerr << "Error opening file." << endl;
+        return 1;
+    }
+
+    // First pass: Count the number of lines in the file
+    int numReturns = 0;
+    string line;
+    while (getline(file, line)) {
+        ++numReturns;
+    }
+
+    // Allocate memory for the returns array based on the number of lines
+    double* returns = new double[numReturns];
+
+    // Reset the file read pointer to the beginning of the file
+    file.clear();
+    file.seekg(0, ios::beg);
+
+    // Second pass: Read the returns from the file
+    int index = 0;
+    while (getline(file, line)) {
+        try {
+            returns[index++] = stod(line);
+        } catch (const invalid_argument& e) {
+            cerr << "Invalid data in CSV: " << line << endl;
+            delete[] returns;  // Clean up the dynamically allocated memory
+            return 1;
+        }
+    }
+    file.close();
+
+    double riskFreeRate = 0.01;  // Assume a risk-free rate of 1% for the Sharpe Ratio calculation
+     CompareStock compareStock("stock_data.csv");
     compareStock.compare();
+    RiskManagement rm;
+
+    // Calculate Value at Risk (VaR) at 95% confidence level
+    double VaR = rm.CalculateVaR(returns, numReturns, 0.95);
+    cout << "Value at Risk (95% confidence): " << VaR << endl;
+
+    // Calculate Maximum Drawdown
+    double maxDrawdown = rm.CalculateDrawdown(returns, numReturns);
+    cout << "Maximum Drawdown: " << maxDrawdown << endl;
+
+    // Calculate Sharpe Ratio
+    double sharpeRatio = rm.CalculateSharpeRatio(returns, numReturns, riskFreeRate);
+    cout << "Sharpe Ratio: " << sharpeRatio << endl;
+
+    delete[] returns;  // Clean up the dynamically allocated memory
 
     return 0;
 }
