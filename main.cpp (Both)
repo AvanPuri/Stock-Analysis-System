@@ -13,7 +13,7 @@ using namespace std;
 StockAnalysis S;
 
 struct BandEdate {
-
+    // Struct to hold the beginning and end date of the stock
     struct tm begin {};
     struct tm end {};
 };
@@ -23,21 +23,17 @@ bool UserLogIn();
 bool Register();
 void Menu();
 
-int main() {
 
-    Menu();
-
-    return 0;
-}
 
 void NewTicker() {
-
+    // Function to get stock information from user
     string URL = StockInfo();
     cout << URL << endl;
 
     
 }
 bool CheckTicker(const string& ticker) {
+    // Function to check if the ticker is valid
     if (ticker.empty()) {
         return false;
     }
@@ -56,7 +52,7 @@ string StockInfo() {
     CurlWrap C;
     string interval;
     string ticker;
-
+    // do while loop to get the ticker from the user
     do {
         cout << "Enter ticker of stock you would like to find information on (E.g. AAPL): " << endl;
         cin >> ticker;
@@ -64,7 +60,7 @@ string StockInfo() {
             cout << "Invalid ticker. Please try again. Make sure everything you enters is in capitals and all letters" << endl;
         }
     } while (!CheckTicker(ticker));
-    
+    // Get the beginning and end date of the stock
     cout << "Enter the beginning year: " << endl;
     cin >> T.begin.tm_year;
     T.begin.tm_year -= 1900;
@@ -86,10 +82,10 @@ string StockInfo() {
 
     cout << "Enter the end day (1-31): " << endl;
     cin >> T.end.tm_mday;
-
+    // Get the interval of the stock
     cout << "Enter the interval for the stock (E.g. 1d): " << endl;
     cin >> interval;
-
+    // Convert the beginning and end date to time_t
     time_t starttime = mktime(&T.begin);
 
 
@@ -97,17 +93,17 @@ string StockInfo() {
 
 
 
-
+    // Convert the time_t to system_clock::time_point
     system_clock::time_point start_date = system_clock::from_time_t(starttime);
     system_clock::time_point end_date = system_clock::from_time_t(endtime);
-
+    // Return the URL
     return C.URL(ticker, start_date, end_date, interval);
 
 
 }
 void AnalyzeData1() {
 
-    
+    // Analyze the stock data
     S.AnalyzeData();
     S.OpenFile();
     S.Parsedata();
@@ -123,7 +119,7 @@ void AnalyzeData1() {
 
 void Savetofile() {
 
-
+    // Save the stock data to a file
     
     S.Dataintofile();
 }
@@ -133,6 +129,7 @@ bool Register() {
     DataBase User;
     string username, password;
     bool LoggedIn = false;
+    // Register the user
     while (LoggedIn == false) {
         cout << "Please enter a username : ";
         cin >> username;
@@ -154,7 +151,7 @@ bool Register() {
         bool Length = false;
         bool HasNum = false;
 
-
+        // Check if the password is valid
         while (!Length || !HasNum) {
             if (password.length() >= 10) {
                 Length = true;
@@ -179,7 +176,7 @@ bool Register() {
                 cout << "Please enter a password : ";
                 cin >> password;
             }
-
+            // Set the password
             cout << endl;
             cout << "**********************" << endl;
             cout << "Password accepted. Account for > " << signUp.Getusername() << " < created successfully." << endl;
@@ -198,7 +195,7 @@ void Menu() {
     char choice;
     bool LoggedIn = false;
     bool exit = false;
-
+    // Main menu for the program
     do {
         cout << "Please select an option : " << endl;
         cout << "1. Login" << endl;
@@ -210,25 +207,30 @@ void Menu() {
 
         switch (choice) {
         case '1':
+            // Log the user in
             LoggedIn = UserLogIn();
             break;
 
         case '2':
+            // Register the user
             Register();
             break;
 
         case '3':
+            // Exit the program
             cout << "Thank you for using the program. Goodbye!" << endl;
             exit = true;
             break;
 
         default:
+            // Invalid choice
             cout << "Invalid choice, please try again." << endl;
             break;
         }
 
         if (LoggedIn) {
             do {
+                // Menu for the user
                 cout << "Please select an option for stock analysis : " << endl;
                 cout << "1. Choose a new stock ticker : " << endl;
                 cout << "2. Analyze stock file : " << endl;
@@ -240,22 +242,26 @@ void Menu() {
 
                 switch (choice) {
                 case '1':
+                    // Get a new stock ticker and enter new information
                     NewTicker();
                     break;
                 case '2':
+                    // Analyze the stock data
                     AnalyzeData1();
-
+                    break;
                 case '3':
-                    
+                    // Save the stock data to a file
                     Savetofile();
                    	break;
                 case '4':
+                    // Log the user out
                     cout << "**********************" << endl;
                     cout << "Successfully logged out." << endl;
                     cout << "**********************" << endl;
                     LoggedIn = false;
                     break;
                 default:
+                    // Invalid choice
                     cout << "Invalid entry." << endl;
                     break;
                 }
@@ -265,5 +271,10 @@ void Menu() {
     } while (exit == false);
 }
 
+int main() {
+    // Main function to run the program
+    Menu();
 
+    return 0;
+}
 
