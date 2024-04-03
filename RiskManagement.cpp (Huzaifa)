@@ -2,8 +2,10 @@
 #include <algorithm>
 #include <cmath>
 
+using namespace std;  // Use the entire standard namespace
+
 double RiskManagement::CalculateVaR(double* returns, int numReturns, double confidenceLevel) {
-    std::sort(returns, returns + numReturns);
+    sort(returns, returns + numReturns);  // std::sort
     int index = static_cast<int>(numReturns * (1 - confidenceLevel));
     return -returns[index];
 }
@@ -13,8 +15,8 @@ double RiskManagement::CalculateDrawdown(double* returns, int numReturns) {
     double drawdown = 0.0;
 
     for (int i = 0; i < numReturns; ++i) {
-        maxReturn = std::max(maxReturn, returns[i]);
-        drawdown = std::min(drawdown, returns[i] - maxReturn);
+        maxReturn = max(maxReturn, returns[i]);  // std::max
+        drawdown = min(drawdown, returns[i] - maxReturn);  // std::min
     }
 
     return drawdown;
@@ -29,4 +31,12 @@ double RiskManagement::CalculateSharpeRatio(double* returns, int numReturns, dou
 
     double sumSquaredDiff = 0.0;
     for (int i = 0; i < numReturns; ++i) {
-        sumSquaredDiff += std::pow(returns[i] - avgReturn, 
+        sumSquaredDiff += pow(returns[i] - avgReturn, 2);  // std::pow
+    }
+    double variance = sumSquaredDiff / numReturns;
+    double stdDeviation = sqrt(variance);  // std::sqrt
+
+    double sharpeRatio = (avgReturn - riskFreeRate) / stdDeviation;
+    return sharpeRatio;
+}
+
